@@ -1,0 +1,10 @@
+{
+    "display_name": "Nyx's lib of fun things",
+    "loading_order": 12,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "author": "Carsten Kragelund",
+    "version": "1.0.0",
+    "homePage": "https://github.com/SillyTavern/SillyTavern"
+}
