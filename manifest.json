@@ -1,10 +1,12 @@
 {
     "display_name": "Nyx's lib of fun things",
+    "extension_name": "third-party/st-nyxlib",
     "loading_order": 12,
     "requires": [],
     "optional": [],
     "js": "index.js",
+    "css": "style.css",
     "author": "Carsten Kragelund",
     "version": "1.0.0",
-    "homePage": "https://github.com/SillyTavern/SillyTavern"
+    "homePage": "https://github.com/NyxKrage/st-nyxlib"
 }
