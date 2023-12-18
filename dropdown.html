@@ -1,0 +1,37 @@
+<div class="nyxlib-settings">
+    <div class="inline-drawer">
+        <div class="inline-drawer-toggle inline-drawer-header" title="Indicates the settings for the nyxlib extension.">
+            <b>NyxLib</b>
+            <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+        </div>
+
+        <div class="inline-drawer-content">
+            <div class="flex flex-col">
+                <div class="mb-1">
+                    <h2 class="font-bold text-lg">Weather Report</h2>
+                    <p>Sets the global variable <span class="font-mono">weatherreport</span></p>
+                </div>
+                <div class="flex items-center">
+                    <input id="weatherreport_enabled" type="checkbox"
+                        title="Toggle to enable or disable the weatherreport feature." />
+                    <label for="weatherreport_enabled">Enabled</label>
+                </div>
+                <div class="flex gap-2">
+                    <div class="flex flex-col-reverse grow">
+                        <input id="weatherreport_latitude" class="text_pole h-10" title="Weather Report Latitude" />
+                        <label for="weatherreport_latitude">Latitude</label>
+                    </div>
+                    <div class="flex flex-col-reverse grow">
+                        <input id="weatherreport_longitude" class="text_pole h-10" title="Weather Report Longitude" />
+                        <label for="weatherreport_longitude">Longitude</label>
+                    </div>
+                    <button id="weatherreport_update_location" class="menu_button menu_button_icon h-10 self-end">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Update Weather Location</span>
+                    </button>
+                </div>
+            </div>
+            <hr class="sysHR" />
+        </div>
+    </div>
+</div>
