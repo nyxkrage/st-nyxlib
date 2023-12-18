@@ -1,0 +1,7 @@
+[{
+  "id": "Extension-NyxLib",
+  "type": "extension",
+  "name": "NyxLib",
+  "description": "Collection of various SillyTavern functions packaged up as a UI extension (fetch from websites, manipulate JSON, assign JSON to variables)",
+  "url": "https://github.com/NyxKrage/st-nyxlib"
+}]
