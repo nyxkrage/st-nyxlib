@@ -1,0 +1,7 @@
+/echo {{// save as a quickreply with the name update_weather_timer and mark execute on user message (can be marked as invisible) |
+/setglobalvar key=currenttime {{datetimeformat X}} |
+/sub currenttime last_weather_update |
+/setvar key=elapsed |
+/echo {{getvar::elapsed}} |
+/if left=elapsed right=120 rule=gt "/setglobalvar key=last_weather_update {{getglobalvar::currenttime}} \| /run update_weather" |
+/flushvar elapsed
