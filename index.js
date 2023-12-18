@@ -1,6 +1,6 @@
-import { chat_metadata } from '../../../script.js';
-import { saveMetadataDebounced } from '../../extensions.js';
-import { registerSlashCommand } from '../../slash-commands.js';
+import { chat_metadata } from '../../../../script.js';
+import { saveMetadataDebounced } from '../../../extensions.js';
+import { registerSlashCommand } from '../../../slash-commands.js';
 import { compile } from "https://esm.sh/@sscots/jqjs@1.1.0"
 
 function setLocalVariable(name, value) {
