@@ -1,0 +1,3 @@
+/echo {{// save as a quickreply with the name set_timers and mark as execute on app startup}}
+/setglobalvar key=currenttime {{datetimeformat X}} |
+/setglobalvar key=last_weather_update {{getglobalvar::currenttime}}
