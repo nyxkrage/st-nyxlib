@@ -1,0 +1,25 @@
+/echo {{// save as a quickreply with the name update_weather (can be marked as invisible)}} |
+/echo {{// adjust latitude and lonitude in the below line to change where its getting the weather from}} |
+/fetch https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=apparent_temperature,rain,snowfall,cloud_cover&wind_speed_unit=ms&timeformat=unixtime&forecast_days=1 |
+/jq expr={"temp":.current.apparent_temperature,"rainfall":.current.rain,"snowfall":.current.snowfall,"cloudcover":.current.cloud_cover} |
+/setobjectvar |
+/setvar key=cloudcover_state overcast |
+/if left=cloudcover right=80 rule=lt "/setvar key=cloudcover_state mostly cloudy" |
+/if left=cloudcover right=50 rule=lt "/setvar key=cloudcover_state partly cloudy" |
+/if left=cloudcover right=20 rule=lt "/setvar key=cloudcover_state mostly clear" |
+/setvar key=rainfall_state heavy |
+/if left=rainfall right=7.6 rule=lt "/setvar key=rainfall_state moderate" |
+/if left=rainfall right=2.6 rule=lt "/setvar key=rainfall_state light" |
+/if left=rainfall right=0.1 rule=lt "/setvar key=rainfall_state no" |
+/setvar key=snowfall_state heavy |
+/if left=snowfall right=7.6 rule=lt "/setvar key=snowfall_state moderate" |
+/if left=snowfall right=2.6 rule=lt "/setvar key=snowfall_state light" |
+/if left=snowfall right=0.1 rule=lt "/setvar key=snowfall_state no" |
+/setvar key=temp_state very hot |
+/if left=temp right=40 rule=lt "/setvar key=temp_state hot" |
+/if left=temp right=30 rule=lt "/setvar key=temp_state warm" |
+/if left=temp right=25 rule=lt "/setvar key=temp_state comfortable" |
+/if left=temp right=15 rule=lt "/setvar key=temp_state chilly" |
+/if left=temp right=10 rule=lt "/setvar key=temp_state cold" |
+/if left=temp right=0 rule=lt "/setvar key=temp_state very cold" |
+/setglobalvar key=weatherreport The weather is {{getvar::temp_state}} at {{getvar::temp}} degrees, the sky is {{getvar::cloudcover_state}}, there is {{getvar::snowfall_state}} snowfall and {{getvar::rainfall_state}} rainfall.
