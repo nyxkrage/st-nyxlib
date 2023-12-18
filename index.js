@@ -33,7 +33,7 @@ function updateWeatherQuickReplies(e) {
             "hidden": true
         },
         {
-            "mes": "/setglobalvar key=currenttime {{datetimeformat X}} |\n/sub currenttime last_weather_update |\n/setvar key=elapsed |\n/if left=elapsed right=120 rule=gt \"/setglobalvar key=last_weather_update {{getglobalvar::currenttime}} \\| /run update_weather\" |\n/flushvar elapsed",
+            "mes": "/setglobalvar key=currenttime {{datetimeformat X}} |\n/sub currenttime last_weather_update |\n/setvar key=elapsed |\n/if left=elapsed right=120 rule=gt \"/setglobalvar key=last_weather_update {{getglobalvar::currenttime}} \\| /run weather_update\" |\n/flushvar elapsed",
             "label": "weather_update_timer",
             "enabled": true,
             "contextMenu": [],
