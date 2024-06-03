@@ -25,6 +25,5 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({ name: 'jq',
 }));
 
 function jq(expr, value) {
-    let data = Array.from(compile(expr)(JSON.parse(value)))[0]
-    return typeof data === "object" ? JSON.stringify(data) : data.toString()
+    return JSON.stringify(Array.from(compile(expr)(JSON.parse(value))))
 }
