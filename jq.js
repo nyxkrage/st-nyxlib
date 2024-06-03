@@ -2166,7 +2166,8 @@ const functions = {
         if (nameType(input) != 'array')
             throw 'can only index on arrays, not ' + nameType(input)
         for (let s of args[0].apply(input, conf)) {
-            yield (input).indexOf(s)
+            let idx = (input).indexOf(s) 
+            yield idx === -1 ? false : idx
         }
     }, {params: [{label: 'element'}]}),
 }
