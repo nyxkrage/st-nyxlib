@@ -2161,7 +2161,14 @@ const functions = {
             throw 'can only flatten arrays, not ' + nameType(input) 
         let r = Array.from(input)
         yield r.flat()
-    }
+    },
+    'index/1': Object.assign(function*(input, conf, args) {
+        if (nameType(input) != 'array')
+            throw 'can only index on arrays, not ' + nameType(input)
+        for (let s of args[0].apply(input, conf)) {
+            yield (input).indexOf(s)
+        }
+    }, {params: [{label: 'element'}]}),
 }
 
 // Implements the containment algorithm, returning whether haystack
