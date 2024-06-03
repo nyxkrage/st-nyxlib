@@ -5,7 +5,6 @@
     "requires": [],
     "optional": [],
     "js": "index.js",
-    "css": "style.css",
     "author": "Carsten Kragelund",
     "version": "1.0.0",
     "homePage": "https://github.com/NyxKrage/st-nyxlib"
