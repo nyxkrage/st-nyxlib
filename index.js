@@ -1,4 +1,4 @@
-import { compile } from "https://esm.sh/@sscots/jqjs@1.1.0"
+import { compile } from "./jq.js"
 import { SlashCommandParser } from '../../../slash-commands/SlashCommandParser.js';
 import { SlashCommand } from '../../../slash-commands/SlashCommand.js';
 import { ARGUMENT_TYPE, SlashCommandArgument, SlashCommandNamedArgument } from '../../../slash-commands/SlashCommandArgument.js';
