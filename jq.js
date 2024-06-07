@@ -260,12 +260,13 @@ function tokenise(str, startAt=0, parenDepth) {
                 }
             }
             error("unterminated string literal")
-        } else if (isDigit(c)) {
-            let tok = ''
+        } else if ((c == '-' && isDigit(str[i+1])) || (isDigit(c))) {
+            let tok = c
+            i += 1
             while (isDigit(str[i]) || str[i] == '.')
                 tok += str[i++]
             ret.push({type: 'number', value: Number.parseFloat(tok), location})
-                i--
+            i--
         } else if (c == '.') {
             let d = str[i+1]
             if (isAlpha(d)) {
