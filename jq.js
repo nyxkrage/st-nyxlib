@@ -359,6 +359,8 @@ function tokenise(str, startAt=0, parenDepth) {
                     || tok == 'if' || tok == 'then' || tok == 'else'
                     || tok == 'end' || tok == 'elif') {
                 ret.push({type: tok, location})
+            } else if (tok == 'and') {
+                ret.push({type: 'op', op: 'and', location})
             } else {
                 ret.push({type: 'identifier', value: tok, location})
             }
@@ -749,7 +751,8 @@ function parseObject(tokens, startAt=0) {
 
 function shuntingYard(stream) {
     const prec = { '+' : 5, '-' : 5, '*' : 10, '/' : 10, '%' : 10,
-        '//' : 2, '==': 3, '!=': 3, '>': 3, '<': 3, '>=': 3, '<=': 3 }
+        '//' : 2, '==': 3, '!=': 3, '>': 3, '<': 3, '>=': 3, '<=': 3,
+        'and': 1 }
     let output = []
     let operators = []
     for (let x of stream) {
@@ -776,6 +779,7 @@ function shuntingYard(stream) {
         '>': GreaterThanOperator,
         '<=': LessEqualsOperator,
         '>=': GreaterEqualsOperator,
+        'and': AndOperator,
     }
     let stack = []
     for (let o of output) {
@@ -1548,6 +1552,19 @@ class NotEqualsOperator extends EqualsOperator {
         return this.l + ' != ' + this.r
     }
 }
+class AndOperator extends OperatorNode {
+    constructor(l, r) {
+        super(l, r)
+    }
+    combine(l, r, lt, rt) {
+        if (lt != "boolean" && rt != "boolean")
+            throw "you cannot and non-booleans"
+        return l && r
+    }
+    toString() {
+        return this.l + " and " + this.r
+    }
+}
 class AlternativeOperator extends ParseNode {
     constructor(l, r) {
         super()
@@ -2176,7 +2193,7 @@ const functions = {
         let r = Array.from(input)
         r.reverse()
         yield r
-    }
+    },
 }
 
 // Implements the containment algorithm, returning whether haystack
