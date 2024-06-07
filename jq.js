@@ -2170,7 +2170,7 @@ const functions = {
             yield idx === -1 ? false : idx
         }
     }, {params: [{label: 'element'}]}),
-    'reverse': function*(input, conf) {
+    'reverse/0': function*(input, conf) {
         if (nameType(input) != 'array')
             throw 'can only reverse arrays not ' + nameType(input)
         let r = Array.from(input)
