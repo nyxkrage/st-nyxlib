@@ -4,6 +4,9 @@ import { SlashCommand } from '../../../slash-commands/SlashCommand.js';
 import { getContext } from '../../../extensions.js';
 import { isTrueBoolean } from '../../../utils.js';
 import { resolveVariable } from '../../../variables.js';
+import { activateSendButtons, deactivateSendButtons, generateQuietPrompt } from '../../../../script.js';
+import { addEphemeralStoppingString, flushEphemeralStoppingStrings } from '../../../power-user.js';
+
 
 import { ARGUMENT_TYPE, SlashCommandArgument, SlashCommandNamedArgument } from '../../../slash-commands/SlashCommandArgument.js';
 
@@ -29,6 +32,19 @@ async function generateCallback(args, value) {
             activateSendButtons();
         }
         flushEphemeralStoppingStrings();
+    }
+}
+
+function setEphemeralStopStrings(value) {
+    if (typeof value === 'string' && value.length) {
+        try {
+            const stopStrings = JSON.parse(value);
+            if (Array.isArray(stopStrings)) {
+                stopStrings.forEach(stopString => addEphemeralStoppingString(stopString));
+            }
+        } catch {
+            // Do nothing
+        }
     }
 }
 
