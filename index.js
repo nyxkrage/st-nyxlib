@@ -1,7 +1,8 @@
 import { compile } from "./jq.js"
 import { SlashCommandParser } from '../../../slash-commands/SlashCommandParser.js';
 import { SlashCommand } from '../../../slash-commands/SlashCommand.js';
-import { getContext } from '../../../extensions.js';
+import { getContext, isTrueBoolean } from '../../../extensions.js';
+import { isTrueBoolean } from '../../../utils.js';
 
 import { ARGUMENT_TYPE, SlashCommandArgument, SlashCommandNamedArgument } from '../../../slash-commands/SlashCommandArgument.js';
 
