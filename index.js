@@ -3,6 +3,7 @@ import { SlashCommandParser } from '../../../slash-commands/SlashCommandParser.j
 import { SlashCommand } from '../../../slash-commands/SlashCommand.js';
 import { getContext } from '../../../extensions.js';
 import { isTrueBoolean } from '../../../utils.js';
+import { resolveVariable } from '../../../variables.js';
 
 import { ARGUMENT_TYPE, SlashCommandArgument, SlashCommandNamedArgument } from '../../../slash-commands/SlashCommandArgument.js';
 
