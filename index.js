@@ -1,15 +1,46 @@
 import { compile } from "./jq.js"
 import { SlashCommandParser } from '../../../slash-commands/SlashCommandParser.js';
 import { SlashCommand } from '../../../slash-commands/SlashCommand.js';
-import { getContext } from '../../../extensions.js';
+import { getContext, saveMetadataDebounced } from '../../../extensions.js';
 import { isTrueBoolean } from '../../../utils.js';
 import { getWorldInfoPrompt } from '../../../world-info.js';
-import { resolveVariable, setLocalVariable } from '../../../variables.js';
-import { activateSendButtons, deactivateSendButtons, generateQuietPrompt, getMaxContextSize } from '../../../../script.js';
+import { resolveVariable } from '../../../variables.js';
+import { activateSendButtons, deactivateSendButtons, generateQuietPrompt, getMaxContextSize, chat_metadata } from '../../../../script.js';
 import { addEphemeralStoppingString, flushEphemeralStoppingStrings } from '../../../power-user.js';
 
 
 import { ARGUMENT_TYPE, SlashCommandArgument, SlashCommandNamedArgument } from '../../../slash-commands/SlashCommandArgument.js';
+
+function setLocalVariable(name, value, args = {}) {
+    if (!chat_metadata.variables) {
+        chat_metadata.variables = {};
+    }
+
+    if (args.index !== undefined) {
+        try {
+            let localVariable = JSON.parse(chat_metadata.variables[name] ?? 'null');
+            const numIndex = Number(args.index);
+            if (Number.isNaN(numIndex)) {
+                if (localVariable === null) {
+                    localVariable = {};
+                }
+                localVariable[args.index] = value;
+            } else {
+                if (localVariable === null) {
+                    localVariable = [];
+                }
+                localVariable[numIndex] = value;
+            }
+            chat_metadata.variables[name] = JSON.stringify(localVariable);
+        } catch {
+            // that didn't work
+        }
+    } else {
+        chat_metadata.variables[name] = value;
+    }
+    saveMetadataDebounced();
+    return value;
+}
 
 async function worldInfoPrefill(args, value) {
     const chat = window.SillyTavern.getContext().chat.filter(m => !m.is_system).map(m => `${m.name}: ${m.mes}`)
