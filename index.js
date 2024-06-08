@@ -91,17 +91,16 @@ SlashCommandParser.addCommandObject(SlashCommand.fromProps({
     name: 'prefillwi',
     callback: worldInfoPrefill,
     returns: 'nothing',
-    namedArgumentList: [
-        new SlashCommandNamedArgument(
-            'lock', 'lock user input during generation', [ARGUMENT_TYPE.BOOLEAN], false, false, null, ['on', 'off'],
-        ),
-        new SlashCommandNamedArgument(
-            'length', 'API response length in tokens', [ARGUMENT_TYPE.NUMBER], false,
-        ),
+    unnamedArgumentList: [
+        SlashCommandArgument.fromProps({
+            description: 'The prefill',
+            typeList: [ARGUMENT_TYPE.STRING],
+            isRequired: true,
+        }),
     ],
     helpString: `
         <div>
-            Generates text using the current chat and passes it to the next command through the pipe, optionally locking user input while generating.
+            Sets the variables worldInfoBefore and worldInfoAfter based on the chat and the given prefill
         </div>
     `,
 }));
