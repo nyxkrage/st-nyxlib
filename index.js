@@ -3,12 +3,20 @@ import { SlashCommandParser } from '../../../slash-commands/SlashCommandParser.j
 import { SlashCommand } from '../../../slash-commands/SlashCommand.js';
 import { getContext } from '../../../extensions.js';
 import { isTrueBoolean } from '../../../utils.js';
-import { resolveVariable } from '../../../variables.js';
-import { activateSendButtons, deactivateSendButtons, generateQuietPrompt } from '../../../../script.js';
+import { getWorldInfoPrompt } from '../../../world-info.js';
+import { resolveVariable, setLocalVariable } from '../../../variables.js';
+import { activateSendButtons, deactivateSendButtons, generateQuietPrompt, getMaxContextSize } from '../../../../script.js';
 import { addEphemeralStoppingString, flushEphemeralStoppingStrings } from '../../../power-user.js';
 
 
 import { ARGUMENT_TYPE, SlashCommandArgument, SlashCommandNamedArgument } from '../../../slash-commands/SlashCommandArgument.js';
+
+async function worldInfoPrefill(args, value) {
+    const chat = window.SillyTavern.getContext().chat.filter(m => !m.is_system).map(m => `${m.name}: ${m.mes}`)
+    const wi = await getWorldInfoPrompt([...chat, `Seraphina: ${value}`].reverse(), getMaxContextSize())
+    setLocalVariable("worldInfoBefore", wi.worldInfoBefore)
+    setLocalVariable("worldInfoAfter", wi.worldInfoAfter)
+}
 
 async function generateCallback(args, value) {
     // Prevent generate recursion
@@ -47,6 +55,25 @@ function setEphemeralStopStrings(value) {
         }
     }
 }
+
+SlashCommandParser.addCommandObject(SlashCommand.fromProps({
+    name: 'prefillwi',
+    callback: worldInfoPrefill,
+    returns: 'nothing',
+    namedArgumentList: [
+        new SlashCommandNamedArgument(
+            'lock', 'lock user input during generation', [ARGUMENT_TYPE.BOOLEAN], false, false, null, ['on', 'off'],
+        ),
+        new SlashCommandNamedArgument(
+            'length', 'API response length in tokens', [ARGUMENT_TYPE.NUMBER], false,
+        ),
+    ],
+    helpString: `
+        <div>
+            Generates text using the current chat and passes it to the next command through the pipe, optionally locking user input while generating.
+        </div>
+    `,
+}));
 
 SlashCommandParser.addCommandObject(SlashCommand.fromProps({
     name: 'genchar',
